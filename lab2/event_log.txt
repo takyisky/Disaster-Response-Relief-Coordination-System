@@ -1,0 +1,18 @@
+Disaster Monitoring Event Log
+========================================
+
+[10:30:55] WARNING: Fire in Zone_B, damage at 5.6
+[10:30:58] WARNING: Fire in Zone_B, damage at 6.2
+[10:31:01] WARNING: Fire in Zone_B, damage at 6.9
+[10:31:04] CRITICAL: Zone_B damage level is 7.4
+[10:31:04] WARNING: Fire in Zone_B, damage at 7.4
+[10:31:07] CRITICAL: Zone_B damage level is 8.1
+[10:31:07] WARNING: Fire in Zone_B, damage at 8.1
+[10:31:10] CRITICAL: Zone_B damage level is 8.5
+[10:31:10] WARNING: Fire in Zone_B, damage at 8.5
+[10:31:13] CRITICAL: Zone_B damage level is 8.9
+[10:31:13] WARNING: Fire in Zone_B, damage at 8.9
+[10:31:16] CRITICAL: Zone_B damage level is 9.3
+[10:31:16] WARNING: Fire in Zone_B, damage at 9.3
+[10:31:19] CRITICAL: Zone_B damage level is 9.7
+[10:31:19] WARNING: Fire in Zone_B, damage at 9.7
