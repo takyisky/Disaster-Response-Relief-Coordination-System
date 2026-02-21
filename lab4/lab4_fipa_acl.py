@@ -36,7 +36,7 @@ class SensorAgent(Agent):
 
             body = f"WATER:{water};RAIN:{rain};WIND:{wind}"
 
-            msg = Message(to="risk@localhost")
+            msg = Message(to="takyisky.risk4@xmpp.jp")  # RiskAgent's JID
             msg.set_metadata("performative", "inform")
             msg.set_metadata("ontology",     "sensor-reading")
             msg.set_metadata("language",     "disaster-sl")
@@ -81,7 +81,7 @@ class RiskAgent(Agent):
                 log("RiskAgent", "Assessment",   f"Risk={risk}  Action={action}")
 
                 # REQUEST CoordinatorAgent to act
-                req = Message(to="coordinator@localhost")
+                req = Message(to="takyisky.coordinator4@xmpp.jp")
                 req.set_metadata("performative", "request")
                 req.set_metadata("ontology",     "risk-assessment")
                 req.set_metadata("language",     "disaster-sl")
@@ -126,7 +126,7 @@ class CoordinatorAgent(Agent):
                     log("CoordinatorAgent", "AGREE", f"→ RiskAgent | {agree.body}", "→")
 
                     # Inform RescueAgent
-                    task = Message(to="rescue@localhost")
+                    task = Message(to="takyisky.rescue4@xmpp.jp")
                     task.set_metadata("performative", "inform")
                     task.set_metadata("ontology",     "rescue-task")
                     task.body = f"ACTION:{action};RISK:{risk};WATER:{parts.get('WATER')}"
@@ -173,7 +173,7 @@ class RescueAgent(Agent):
                 await asyncio.sleep(1.5)  # simulate execution
 
                 # Send status update back to coordinator
-                status = Message(to="coordinator@localhost")
+                status = Message(to="takyisky.coordinator4@xmpp.jp")
                 status.set_metadata("performative", "inform")
                 status.set_metadata("ontology",     "rescue-status")
                 status.body = f"STATUS:COMPLETE;ACTION:{action};RISK:{risk}"
@@ -194,16 +194,16 @@ async def main():
     print("  Performatives: INFORM | REQUEST | AGREE | REFUSE")
     print("=" * 65)
 
-    rescue      = RescueAgent(     "rescue@localhost",      "password")
-    coordinator = CoordinatorAgent("coordinator@localhost", "password")
-    risk        = RiskAgent(       "risk@localhost",        "password")
-    sensor      = SensorAgent(     "sensor@localhost",      "password")
+    rescue      = RescueAgent(     "takyisky.rescue4@xmpp.jp",      "rescue123")
+    coordinator = CoordinatorAgent("takyisky.coordinator4@xmpp.jp", "coord123")
+    risk        = RiskAgent(       "takyisky.risk4@xmpp.jp",        "risk123")
+    sensor      = SensorAgent(     "takyisky.sensor4@xmpp.jp",      "sensor123")
 
     # Start in reverse dependency order
-    await rescue.start(auto_register=True)
-    await coordinator.start(auto_register=True)
-    await risk.start(auto_register=True)
-    await sensor.start(auto_register=True)
+    await rescue.start()
+    await coordinator.start()
+    await risk.start()
+    await sensor.start()
 
     print(f"[{ts()}] [Main] All agents running for 40 seconds...")
     await asyncio.sleep(40)
